@@ -92,14 +92,32 @@ describe UsersController do
     end
     
     it "should include the user's name" do
-      get :show, :id => user
+      get :show, :id => @user
       response.should have_selector("h1", :content => @user.name)
     end
     
     it "should have a profile image" do
-      get :show, id: => @user
+      get :show, id: => @user # Here's the bug
       response.should have_selector("h1>img", :class => "gravatar")
     end
+    
+    it "should have a name field" do
+      get :new
+      response.should have_selector("input[name='[user[name]]'[type='text']")
+    end
+    
+    it "should have an email field" do
+      get :new
+      response.should have_selector("input[name='[user[email]]'[type='text']")
+    end
+    
+    it "should have a password field" do
+    end
+    
+    it "should have a password confirmation field" do
+    end
+    
   end
+  
 
 end
